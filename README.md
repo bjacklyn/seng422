@@ -3,6 +3,15 @@ SENG422
 
 Land Surveyor Django Application
 
+Recommended Django Installation Steps (for Linux master race)
+-------------------------------------------------------------
+
+Install pip (package manager for python)
+* sudo apt-get install python-pip
+
+Install Django
+* sudo pip install Django==1.6.5
+
 Running the Server
 ------------------
 
