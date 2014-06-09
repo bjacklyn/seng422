@@ -23,7 +23,9 @@ Admin Interface
 ---------------
 
 The admin interface can be found at localhost:8000/admin/
+
 Username: admin
+
 Password: admin
 
 Since we are using the built-in django authentication module, this provides user creation, password changing, and admin logging for free.
