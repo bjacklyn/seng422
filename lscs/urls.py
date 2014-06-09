@@ -8,8 +8,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'lscs.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^lscs/', include('surveys.urls')),
     url(r'^login/$', 'django.contrib.auth.views.login', {
-        'template_name': 'lscs/login.html'}),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^surveys/', include('surveys.urls')),
+        'template_name': 'lscs/login.html', 'extra_context': {'next': '/lscs/'}}),
+    url(r'^admin/$', include(admin.site.urls)),
 )
