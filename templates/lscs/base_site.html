@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<html>
+
+<head>
+
+{% load staticfiles %}
+<!-- Bootstrap core CSS -->
+<link href="{% static "lscs/css/bootstrap.min.css" %}" rel="stylesheet">
+<!-- Bootstrap theme -->
+<link href="{% static "lscs/css/bootstrap-theme.min.css" %}" rel="stylesheet">
+
+<!-- Custom styles -->
+<link href="{% static "lscs/css/custom.css" %}" rel="stylesheet">
+</head>
+
+<body>
+    <title>{{ title }} | {% trans 'Land Surveyor Checklist System' %}</title>
+
+    {% block body %}{% endblock %}
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="{% static "lscs/js/bootstrap.min.js" %}"></script>
+
+<!-- Custom javascript -->
+<script src="{% static "lscs/js/custom.js" %}"></script>
+</body>
+
+</html>
