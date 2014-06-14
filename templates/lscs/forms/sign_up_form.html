@@ -1,0 +1,72 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <table>
+        <tr>
+            <td>{{ signup_form.username.errors }}</td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-top: 5px;">
+                {{ signup_form.username.label_tag}}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px;">
+                {{ signup_form.username }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ signup_form.password1.errors }}</td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-top: 5px;">
+                {{ signup_form.password1.label_tag }}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px;">
+                {{ signup_form.password1 }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ signup_form.password2.errors }}</td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-top: 5px;">
+                {{ signup_form.password2.label_tag }}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px;">
+                {{ signup_form.password2 }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ signup_form.email.errors }}</td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-top: 5px;">
+                {{ signup_form.email.label_tag }}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px;">
+                {{ signup_form.email }}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-top: 5px;">
+                {{ signup_form.group.label_tag }}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px;">
+                {{ signup_form.group }}
+            </td>
+        </tr>
+    </table>
+    <div style="overflow: hidden;">
+        <button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right;">Sign Up</button>
+    </div>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>

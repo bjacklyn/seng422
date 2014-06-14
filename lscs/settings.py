@@ -86,3 +86,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# SMTP Settings
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'brandonjacklyn@gmail.com'
+EMAIL_HOST_PASSWORD = 'ubndlviddkikkgqw'
