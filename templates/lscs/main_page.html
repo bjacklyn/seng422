@@ -1,0 +1,81 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+
+<div id="loginContent" style="
+    max-width: 400px;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    box-shadow: none;
+    padding: 20px 15px 15px;
+    margin: 60px auto;
+    border-style: solid;
+    border-color: #ddd;
+    background-color: #fff;
+">
+
+    <h1 style="
+    font-size: 26px;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;">
+    Welcome to LSCS</h1>
+
+    <!-- Nav tabs using bootstrap's tab.js -->
+    <ul class="nav nav-tabs" id="tabContainer">
+        <li><a href="#loginPane" data-toggle="tab">Login</a></li>
+        <li><a href="#signupPane" data-toggle="tab">Sign Up</a></li>
+        <li><a href="#resetpasswordPane" data-toggle="tab">Reset Password</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="loginPane" style="margin-top: 20px; margin-left: 7px;">
+            
+            {% include "lscs/forms/login_form.html" %}            
+
+        </div>
+        <div class="tab-pane" id="signupPane" style="margin-top: 20px; margin-left: 7px;">
+
+            {% include "lscs/forms/sign_up_form.html" %}  
+
+        </div>
+        <div class="tab-pane" id="resetpasswordPane" style="margin-top: 20px; margin-left: 7px;">
+
+            {% include "lscs/forms/password_reset_form.html" %} 
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block devJS %}
+
+<script>
+    var activeTab = {% if not signup_form.errors and not resetpassword_form.errors %} 'login'; {% endif %}
+                    {% if not login_form.errors and signup_form.errors %} 'signup'; {% endif %}
+                    {% if not login_form.errors and not signup_form.errors and resetpassword_form.errors %} 'resetpassword'; {% endif %}
+    var activeTabSelector = 'li > a[href="#' + activeTab + 'Pane"]';
+    $(activeTabSelector).tab('show');
+
+    $("#tabContainer > li").click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    $("input").each(function() {
+        $(this).addClass("form-control");
+    });
+</script>
+
+<style type="text/css">
+
+.errorlist {
+    color: red;
+    list-style: none;
+    padding-left: 5px;
+}   
+
+</style>
+
+{% endblock %}
