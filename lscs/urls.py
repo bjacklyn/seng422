@@ -15,5 +15,5 @@ urlpatterns = patterns('',
 		password_reset_confirm, {'post_reset_redirect': '/reset_complete', 'template_name': 'lscs/set_password.html'}, name='password_reset_confirm'),
     url(r'^reset_complete$', 'lscs.views.reset_complete'),
     url(r'^admin$', include(admin.site.urls)),
-    url(r'^surveys$', include('surveys.urls')),
+    url(r'^surveys', include('surveys.urls')),
 )
