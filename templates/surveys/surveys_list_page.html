@@ -1,0 +1,53 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+	<p> Hello {{ user.username }} from group {{ group }}
+	</p>
+	
+	{% if group == 'Manager' %}
+		<a href="surveys/create" class="btn btn-primary btn-lg active" role="button" style="float: right;">Create Survey</a>
+	<form action="surveys/delete" method="post">
+		{% csrf_token %}
+	{% endif %}
+	
+	
+	<table class="table">
+		<thead>
+			<tr>
+				{% if group == 'Manager' %}
+					<th> {{ checkbox }} </th>
+				{% endif %}
+				
+				<th>Date</th>
+				<th>Title</th>
+				<th>{{ group }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for survey in surveys %}
+			<tr>
+				{% if group == 'Manager' %}
+				<td>
+					<div class="checkbox">
+						<input type="checkbox" name="checked_surveys" value="{{ survey.id }}"/> 
+					</div>
+				</td>
+				{% endif %}
+				<td>{{ survey.date_joined }}</td>
+				<td><a href='surveys/{{ survey.id }}'> {{ survey.username }} </a></td>
+				<td>{{ group }}</td>
+			</tr>
+		
+			<!--{{ survey.username }}-->
+		{% endfor %}
+		</tbody>
+	</table>
+
+	
+	{% if group == 'Manager' %}
+		<input type="submit" value="Delete Survey" name="Delete" class="btn btn-primary btn-lg active" role="button" style="float: right;"/>
+		<!-- <a href="survey/create" class="btn btn-primary btn-lg active" role="button" style="float: right;">Delete Survey</a> -->
+	</form>
+	{% endif %}
+	
+{% endblock %}
