@@ -16,13 +16,14 @@ class SignupForm(UserCreationForm):
     def save(self, commit=True):
         user = super(SignupForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
-        
+
         if commit:
             user.save()
 
         user_group = self.cleaned_data['group']
         group = Group.objects.get(name=Group.objects.filter()[int(user_group)])
-        user.groups.add(group)
+
+        user.groups.add(group)    
+        group.user_set.add(user)
 
         return user
-
