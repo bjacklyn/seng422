@@ -18,27 +18,36 @@
 					<th> {{ checkbox }} </th>
 				{% endif %}
 				
-				<th>Date</th>
 				<th>Title</th>
-				<th>{{ group }}</th>
+				<th>Date</th>
+
+				{% if group == 'Manager' %}
+					<th>Surveyor</th>
+				{% else %}
+					<th>Manager</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
 		{% for survey in surveys %}
 			<tr>
 				{% if group == 'Manager' %}
-				<td>
-					<div class="checkbox">
-						<input type="checkbox" name="checked_surveys" value="{{ survey.id }}"/> 
-					</div>
-				</td>
+					<td>
+						<div class="checkbox">
+							<input type="checkbox" name="checked_surveys" value="{{ survey.id }}"/> 
+						</div>
+					</td>
 				{% endif %}
-				<td>{{ survey.date_joined }}</td>
-				<td><a href='surveys/{{ survey.id }}'> {{ survey.username }} </a></td>
-				<td>{{ group }}</td>
+				
+				<td><a href='surveys/{{ survey.id }}'> {{ survey.title }} </a></td>
+				<td>{{ survey.date_created }}</td>
+				
+				{% if group == 'Manager' %}
+					<td>{{ survey.assignee }}</td>
+				{% else %}
+					<td>{{ survey.creator }}</td>
+				{% endif %}
 			</tr>
-		
-			<!--{{ survey.username }}-->
 		{% endfor %}
 		</tbody>
 	</table>
@@ -46,7 +55,6 @@
 	
 	{% if group == 'Manager' %}
 		<input type="submit" value="Delete Survey" name="Delete" class="btn btn-primary btn-lg active" role="button" style="float: right;"/>
-		<!-- <a href="survey/create" class="btn btn-primary btn-lg active" role="button" style="float: right;">Delete Survey</a> -->
 	</form>
 	{% endif %}
 	
