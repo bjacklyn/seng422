@@ -1,0 +1,56 @@
+<div class="panel panel-default" style="margin-top: 60px;">
+  	<div class="panel-body">
+		<form method="post">
+			{% csrf_token %}
+			<h2 style="margin-bottom: 20px; font-weight: 700; color: #bbb; text-transform: uppercase; font-size: 17px;">Create a new survey</h2>
+			{{ form.non_field_errors }}
+
+			<!-- Title, Assignee -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<span>{{ create_survey_form.title.errors }}</span>
+					{{ create_survey_form.title.label_tag}}
+					{{ create_survey_form.title }}
+				</div>
+				<div class="col-md-4">
+					<span>{{ create_survey_form.assignee.errors }}</span>
+					{{ create_survey_form.assignee.label_tag }}
+					{{ create_survey_form.assignee }}
+				</div>
+			</div>
+
+			<!-- Description -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<span>{{ create_survey_form.description.errors }}</span>
+					{{ create_survey_form.description.label_tag }}
+					{{ create_survey_form.description }}
+				</div>
+			</div>
+
+			<!-- Address, Land District, File Number -->
+			<div class="row form-group">
+				<div class="col-md-4">
+					<span>{{ create_survey_form.address.errors }}</span>
+					{{ create_survey_form.address.label_tag}}
+					{{ create_survey_form.address }}
+				</div>
+				<div class="col-md-4">
+					<span>{{ create_survey_form.land_district.errors }}</span>
+					{{ create_survey_form.land_district.label_tag }}
+					{{ create_survey_form.land_district }}
+				</div>
+				<div class="col-md-4">
+					<span>{{ create_survey_form.file_number.errors }}</span>
+					{{ create_survey_form.file_number.label_tag }}
+					{{ create_survey_form.file_number }}
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div style="overflow: hidden;">
+				<button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right;">Create</button>
+			</div>
+			<input type="hidden" name="next" value="{{ next }}" />
+		</form>
+	</div>
+</div>
