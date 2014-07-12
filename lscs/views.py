@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 
 def main_page(request):
     template = loader.get_template('lscs/main_page.html')

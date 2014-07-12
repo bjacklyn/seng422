@@ -43,8 +43,11 @@ def create(request):
 			survey.save()
 			return HttpResponseRedirect(reverse('index'))
 	
+	#plan_title_fields = [field.name for field in Survey._meta.fields if field.name.startswith("plan_title", 0, len(field.name))]
+	
 	context = RequestContext(request, {
             'create_survey_form': create_survey_form
+			#'plan_title_fields': plan_title_fields
             })
 
 	return HttpResponse(template.render(context))
@@ -62,3 +65,7 @@ def delete(request):
 @login_required
 def display(request):
 	return HttpResponse('Your survey is displayed HERE!!! %s!' % request.user.username)
+
+@login_required	
+def cancel(request):
+	return HttpResponseRedirect(reverse('index'))
