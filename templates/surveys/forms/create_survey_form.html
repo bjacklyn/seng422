@@ -45,10 +45,43 @@
 					{{ create_survey_form.file_number.label_tag }}
 					{{ create_survey_form.file_number }}
 				</div>
-				<div class="clearfix"></div>
 			</div>
+			
+			<!-- A- Plan Title Table -->
+			<div class="panel panel-default">
+				<div class="panel-heading">A - Plan Title</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/plan_title_table.html"%}
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- B - Main Body of Plan -->
+			<div class="panel panel-default">
+				<div class="panel-heading">B - Main Body of Plan</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/main_body_table.html"%}
+					</tbody>
+				</table>
+			</div>
+			
 			<div style="overflow: hidden;">
-				<button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right;">Create</button>
+				<button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right; margin-left: 10px;">Create</button>
+				<a href="cancel" class="btn btn-primary btn-lg active" role="button" style="float:right;">Cancel</a>
 			</div>
 			<input type="hidden" name="next" value="{{ next }}" />
 		</form>

@@ -1,8 +1,11 @@
 {% extends "base_site.html" %}
 
 {% block content %}
-	<p> Hello {{ user.username }} from group {{ group }}
-	</p>
+	<div style="padding-bottom: 40px;">
+		<h1> Welcome {{ user.username }}
+			<a href="logout" class="btn btn-primary btn-lg active" role="button" style="float: right;">Logout</a>
+		</h1>
+	</div>
 	
 	{% if group == 'Manager' %}
 		<a href="surveys/create" class="btn btn-primary btn-lg active" role="button" style="float: right;">Create Survey</a>
