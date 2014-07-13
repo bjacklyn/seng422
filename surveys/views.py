@@ -45,13 +45,11 @@ def create_survey(request):
 			survey.creator = request.user
 			survey.save()
 			return HttpResponseRedirect(reverse('list_surveys'))
-		else:
-			print 'create not valid'
 
 	context = RequestContext(request, {
 			'group': group,
 			'user_id': request.user.id,
-            'create_survey_form': create_survey_form,
+			'create_survey_form': create_survey_form,
 			'page_label': 'Create a new survey',
 			'show_submit_button': True,
 			'cancel_button_text': 'Cancel',
