@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Survey(models.Model):
     # Mandatory fields ----------------------------------------------------------------------------
-    creator = models.ForeignKey(User, editable=False, blank=False, related_name='survey_creator')
+    creator = models.ForeignKey(User, blank=False, related_name='survey_creator')
     assignee = models.ForeignKey(User, blank=False, related_name='survey_assignee')
 
     date_created = models.DateTimeField('date created', editable=False, auto_now_add=True)

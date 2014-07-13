@@ -6,8 +6,8 @@ class SignupForm(UserCreationForm):
     email = forms.EmailField(required=True, 
         label='Email')
     group = forms.ChoiceField(required=True,
-        # ("1", "Manager"), ("2", "Surveyor")
-        choices=[(index, group.name) for index, group in enumerate(Group.objects.filter())])
+        choices=[(index, group.name) for index, group in enumerate(Group.objects.filter())],
+		widget=forms.Select(attrs={'class':'form-control'}))
 
     class Meta:
         model = User

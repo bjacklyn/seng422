@@ -1,22 +1,31 @@
 <div class="panel panel-default" style="margin-top: 60px;">
   	<div class="panel-body">
+		{{ create_survey_form.errors }}
 		<form method="post">
 			{% csrf_token %}
-			<h2 style="margin-bottom: 20px; font-weight: 700; color: #bbb; text-transform: uppercase; font-size: 17px;">Create a new survey</h2>
+			<h2 style="margin-bottom: 20px; font-weight: 700; color: #bbb; text-transform: uppercase; font-size: 17px;">{{ page_label }}{{ survey_id }}</h2>
 			{{ form.non_field_errors }}
 
-			<!-- Title, Assignee -->
+			<!-- Title, Assignee/Creator -->
 			<div class="row form-group">
 				<div class="col-md-8">
 					<span>{{ create_survey_form.title.errors }}</span>
 					{{ create_survey_form.title.label_tag}}
 					{{ create_survey_form.title }}
 				</div>
+				{% if group == 'Manager' %}
 				<div class="col-md-4">
 					<span>{{ create_survey_form.assignee.errors }}</span>
 					{{ create_survey_form.assignee.label_tag }}
 					{{ create_survey_form.assignee }}
 				</div>
+				{% else %}
+				<div class="col-md-4">
+					<span>{{ create_survey_form.creator.errors }}</span>
+					{{ create_survey_form.creator.label_tag }}
+					{{ create_survey_form.creator }}
+				</div>
+				{% endif %}
 			</div>
 
 			<!-- Description -->
@@ -80,9 +89,16 @@
 			</div>
 			
 			<div style="overflow: hidden;">
-				<button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right; margin-left: 10px;">Create</button>
-				<a href="cancel" class="btn btn-primary btn-lg active" role="button" style="float:right;">Cancel</a>
+				{% if show_create_button %}
+				<button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right; margin-left: 10px;">{{ submit_button_text }}</button>
+				{% endif%}
+
+				{% if show_edit_button %}
+				<a href="edit/{{ survey_id }}" class="btn btn-primary btn-lg active" role="button" style="float:right; margin-left: 10px;">{{ edit_button_text }}</a>
+				{% endif%}
+				<a href="cancel" class="btn btn-primary btn-lg active" role="button" style="float:right;">{{ cancel_button_text }}</a>
 			</div>
+			<input type="hidden" name="creator" value="{{ user_id }}" />
 			<input type="hidden" name="next" value="{{ next }}" />
 		</form>
 	</div>
