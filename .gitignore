@@ -1,4 +1,5 @@
 # Compiled Python Files
 *.pyc
+*~
 db.sqlite3
 
