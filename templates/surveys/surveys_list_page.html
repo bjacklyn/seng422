@@ -27,7 +27,7 @@
 				{% if group == 'Manager' %}
 					<th>Surveyor</th>
 				{% else %}
-					<th>Manager</th>
+					<th>Creator</th>
 				{% endif %}
 			</tr>
 		</thead>
@@ -42,7 +42,7 @@
 					</td>
 				{% endif %}
 				
-				<td><a href='surveys/{{ survey.id }}'> {{ survey.title }} </a></td>
+				<td><a href='surveys/display/{{ survey.id }}'> {{ survey.title }} </a></td>
 				<td>{{ survey.date_created }}</td>
 				
 				{% if group == 'Manager' %}
