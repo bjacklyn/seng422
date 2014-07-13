@@ -23,7 +23,7 @@ class SignupForm(UserCreationForm):
         user_group = self.cleaned_data['group']
         group = Group.objects.get(name=Group.objects.filter()[int(user_group)])
 
-        user.groups.add(group)    
+        user.groups.add(group)
         group.user_set.add(user)
 
         return user
