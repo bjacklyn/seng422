@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib.auth.models import User, Group
+from passwords.fields import PasswordField
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(required=True, 
@@ -8,6 +9,8 @@ class SignupForm(UserCreationForm):
     group = forms.ChoiceField(required=True,
         choices=[(index, group.name) for index, group in enumerate(Group.objects.filter())],
 		widget=forms.Select(attrs={'class':'form-control'}))
+    password2 = PasswordField(label="Password confirmation",
+        help_text="Enter the same password as above, for verification.")
 
     class Meta:
         model = User
@@ -27,3 +30,7 @@ class SignupForm(UserCreationForm):
         group.user_set.add(user)
 
         return user
+
+class ValidatingSetPasswordForm(SetPasswordForm):
+	new_password2 = PasswordField(label="New password confirmation",
+        help_text="Enter the same password as above, for verification.")

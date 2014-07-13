@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'surveys',
+	'passwords',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,3 +95,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'brandonjacklyn@gmail.com'
 EMAIL_HOST_PASSWORD = 'ubndlviddkikkgqw'
+
+
+# Minimum password strength settings. See the GitHub page for defaults.
+# https://github.com/dstufft/django-passwords/
+PASSWORD_MIN_LENGTH = 8
+PASSWORD_COMPLEXITY = { "UPPER":  1, "LOWER":  1, "DIGITS": 1 }
