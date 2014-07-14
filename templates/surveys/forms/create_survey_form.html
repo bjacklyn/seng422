@@ -42,7 +42,20 @@
 				{% endif %}
 			</div>
 
+			<div style="display: none">
+				<div id="map_and_weather">
+					<!-- Google Maps Embedded iframe -->
+					<iframe width="600" height="450" frameborder="0" style="border:0">
+					</iframe>
+					<div id="weather"></div>
+				</div>
+			</div>
+
 			<script>
+				var encoded_location = encodeURI("{{ create_survey_form.address.value }}");
+				var map_src = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBH0-7vqBjL1-MZtWOOv2PsSDh97vX9lkk&q=" + encoded_location;
+				$("iframe").attr("src", map_src);
+
 				$(document).ready(function() {
 				  $.simpleWeather({
 					location: '{{ create_survey_form.address.value }}',
@@ -65,16 +78,6 @@
 					$("#map_and_weather_fancybox").fancybox();
 				});
 			</script>
-
-			<div style="display: none">
-				<div id="map_and_weather">
-					<!-- Google Maps Embedded iframe -->
-					<iframe width="600" height="450" frameborder="0" style="border:0"
-					  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBH0-7vqBjL1-MZtWOOv2PsSDh97vX9lkk&q=Space+Needle,Seattle+WA">
-					</iframe>
-					<div id="weather"></div>
-				</div>
-			</div>
 
 			<!-- Address, Land District, File Number -->
 			<div class="row form-group">
