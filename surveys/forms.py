@@ -69,7 +69,7 @@ class CreateSurveyForm(forms.ModelForm):
 		self.fields['main_body_of_plan_radius'].label = "Radius, arc, radial bearings for each curve point - GSI Rule 3-4"
 		self.fields['main_body_of_plan_railway_plan'].label = "Railway plan in un-surveyed land has district lot number assigned"
 		self.fields['main_body_of_plan_water_body_access'].label = "Access to water body where applicable - LTA s75(1)"
-		self.fields['main_body_of_plan_unsurveyed_land'].label = "Label Un-surveyed Crown Land including theoretical or unsurveyed portions of townships "
+		self.fields['main_body_of_plan_unsurveyed_land'].label = "Label Un-surveyed Crown Land including theoretical or unsurveyed portions of townships"
 
 		# Scenery ----------------------------------------------------------------------------
 		self.fields['scenery_status_adjacent_roads'].label = "Check status of adjacent roads. Have they all been dedicated?"
@@ -93,7 +93,7 @@ class CreateSurveyForm(forms.ModelForm):
 		# Miscellaneous ----------------------------------------------------------------------------
 		self.fields['miscellaneous_spelling_check'].label = "Spelling check"
 		self.fields['miscellaneous_standard_plan_size'].label = "Standard plan size - GSI Rule 3-1"
-		self.fields['miscellaneous_oriented_north'].label = "If practical, top of plan orientated north - GSI Rule 3-3(5) "
+		self.fields['miscellaneous_oriented_north'].label = "If practical, top of plan orientated north - GSI Rule 3-3(5)"
 		self.fields['miscellaneous_notation'].label = "Notation regarding existing records that plan is compiled from"
 
 		# Electronic Plan ----------------------------------------------------------------------------
