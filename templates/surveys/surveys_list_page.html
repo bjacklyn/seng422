@@ -8,7 +8,7 @@
 	</div>
 	
 	{% if group == 'Manager' %}
-		<a href="surveys/create" class="btn btn-primary btn-lg active" role="button" style="float: right;">Create Survey</a>
+	<a href="surveys/create" class="btn btn-primary btn-lg active" role="button" style="float: right;">Create Survey</a>
 	<form action="surveys/delete" method="post">
 		{% csrf_token %}
 	{% endif %}
@@ -21,13 +21,13 @@
 					<th> {{ checkbox }} </th>
 				{% endif %}
 				
-				<th>Title</th>
-				<th>Date</th>
+				<th><a style="cursor: move;">Title</a></th>
+				<th><a style="cursor: move;">Date</a></th>
 
 				{% if group == 'Manager' %}
-					<th>Surveyor</th>
+					<th><a style="cursor: move;">Surveyor</a></th>
 				{% else %}
-					<th>Creator</th>
+					<th><a style="cursor: move;">Creator</a></th>
 				{% endif %}
 			</tr>
 		</thead>
@@ -60,5 +60,15 @@
 		<input type="submit" value="Delete Survey" name="Delete" class="btn btn-primary btn-lg active" role="button" style="float: right;"/>
 	</form>
 	{% endif %}
+
+	{% load static %}
+	<script src="{% static "lscs/js/jquery.metadata.js" %}"></script>
+	<script src="{% static "lscs/js/jquery.tablesorter.min.js" %}"></script>
+
+	<script>
+		$(document).ready(function() { 
+        	$(".table").tablesorter(); 
+    	}); 
+	</script>
 	
 {% endblock %}

@@ -17,13 +17,12 @@
 	<body style="background: #fff url({% static "lscs/images/sky_blue.png" %}) top left repeat-x">
 	    <title>{{ title }} | {% trans 'Land Surveyor Checklist System' %}</title>
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{% static "lscs/js/bootstrap.min.js" %}"></script>
+
 	    <div class="container">
 	    	{% block content %}{% endblock %}
 	    </div>
-
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="{% static "lscs/js/bootstrap.min.js" %}"></script>
 
 		<!-- Custom javascript -->
 		<script src="{% static "lscs/js/custom.js" %}"></script>
