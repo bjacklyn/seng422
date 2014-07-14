@@ -13,7 +13,13 @@ class CreateSurveyForm(forms.ModelForm):
 		exclude = ('date_created',)
 		widgets = {
             'description': forms.Textarea(attrs={'rows':4})
-        }        
+        }
+
+	def get_disabled(self, disabled=False):
+		if disabled:
+			return {'disabled': 'disabled'}
+		else:
+			return {}
 
 	def __init__(self, *args, **kwargs):
 		disabled = kwargs.pop('disabled', False)
@@ -29,6 +35,11 @@ class CreateSurveyForm(forms.ModelForm):
         # Remove default empty label "------" and only show user's in surveyor group
 		self.fields['assignee'].empty_label = None
 		self.fields['assignee'].queryset = User.objects.filter(groups__name="Surveyor")
+
+		# Change all checklist fields to radioselects instead of dropdowns
+		for field in self.fields:
+			if field.startswith('plan') or field.startswith('main') or field.startswith('scenery') or field.startswith('deposit') or field.startswith('integrated') or field.startswith('miscellaneous') or field.startswith('electronic'):
+				self.fields[field].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
 		
 		# Plan Title ----------------------------------------------------------------------------
 		self.fields['plan_title_type_of_plan'].label = "Type of Plan"
@@ -39,15 +50,6 @@ class CreateSurveyForm(forms.ModelForm):
 		self.fields['plan_title_bearing'].label = "Bearing derivation and reference"
 		self.fields['plan_title_notation'].label = "Notation: bearings to BTs are magnetic or planned bearings"
 		self.fields['plan_title_north_point'].label = "North Point"
-
-		self.fields['plan_title_type_of_plan'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_legal_description'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_bcgs_no'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_scale_and_bar'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_legend'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_bearing'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_notation'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['plan_title_north_point'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
 		
 		# Main Body of Plan ----------------------------------------------------------------------------
 		self.fields['main_body_of_plan_apporopriate_designation'].label = "Appropriate designation for title or Interest parcels (e.g. Lot Number)"
@@ -68,28 +70,34 @@ class CreateSurveyForm(forms.ModelForm):
 		self.fields['main_body_of_plan_railway_plan'].label = "Railway plan in un-surveyed land has district lot number assigned"
 		self.fields['main_body_of_plan_water_body_access'].label = "Access to water body where applicable - LTA s75(1)"
 		self.fields['main_body_of_plan_unsurveyed_land'].label = "Label Un-surveyed Crown Land including theoretical or unsurveyed portions of townships "
-		
-		self.fields['main_body_of_plan_apporopriate_designation'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_essential_dimensions'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_gsi_rule3'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_boundaries_reestablished'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_sufficient_ties'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_monumentation'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_dedicated_road'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_hooked_parcels'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_new_dedicated_road'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_no_text_2mm'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_plotting_scale'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_bold_outline'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_existing_rw'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_bearing_trees_details'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_radius'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_railway_plan'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_water_body_access'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
-		self.fields['main_body_of_plan_unsurveyed_land'].widget = forms.RadioSelect(choices=Survey.SURVEY_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
 
-	def get_disabled(self, disabled=False):
-		if disabled:
-			return {'disabled': 'disabled'}
-		else:
-			return {}
+		# Scenery ----------------------------------------------------------------------------
+		self.fields['scenery_status_adjacent_roads'].label = "Check status of adjacent roads. Have they all been dedicated?"
+		self.fields['scenery_parcel_boundaries'].label = "Parcel boundaries (incl. highway, roads and railway) shown with solid lines - Rule 3-4(2)(g)"
+		self.fields['scenery_description_surrounding_lands'].label = "Description(s) given for all surrounding lands - GSI Rule 3-4(1)(r)"
+		self.fields['scenery_primary_parcel_designations'].label = "Primary parcel designations prominent in body of plan (use 'DL' not 'Lot') - Rule 10-14"
+		self.fields['scenery_existing_road_names'].label = "Existing Road Names shown - GSI Rule 3-4"
+		self.fields['scenery_roads_trails_seismic_lines'].label = "Roads, Trails, and Seismic Lines shown and labelled with width and posted as required"
+		self.fields['scenery_rem_added'].label = "'Rem' added on lot and 'portion of' or 'part of' in title where appropriate"
+
+		# Deposit Statement ----------------------------------------------------------------------------
+		self.fields['deposit_statement_plan_lies_within'].label = "Plan lies within (Regional District) statement - GSI Rule 3-4"
+		self.fields['deposit_statement_leave_seven_cm'].label = "Leave 7 cm 12 cm clear space in top right corner for Registrar's notation pursuant to S 56 LTA"
+
+		# Integrated Survey Area ----------------------------------------------------------------------------
+		self.fields['integrated_survey_area_grid_bearing'].label = "Grid bearing notation; ISA name and number, datum and bearing derivation - GSI Rule 5-7"
+		self.fields['integrated_survey_area_control_monuments_tied'].label = "Control monuments tied in accordance with GSI Rules 5-4(2)"
+		self.fields['integrated_survey_area_meets_accuracy'].label = "Meets accuracy standards of integrated legal survey - GSI Rule 5-4 (3) & (4)"
+		self.fields['integrated_survey_area_control_monuments_shown'].label = "Control monuments shown on plan with required symbol and respective designation - GSI Rule 5-7(2)"
+
+		# Miscellaneous ----------------------------------------------------------------------------
+		self.fields['miscellaneous_spelling_check'].label = "Spelling check"
+		self.fields['miscellaneous_standard_plan_size'].label = "Standard plan size - GSI Rule 3-1"
+		self.fields['miscellaneous_oriented_north'].label = "If practical, top of plan orientated north - GSI Rule 3-3(5) "
+		self.fields['miscellaneous_notation'].label = "Notation regarding existing records that plan is compiled from"
+
+		# Electronic Plan ----------------------------------------------------------------------------
+		self.fields['electronic_plan_plan_image'].label = "Plan Image created with Adobe 6.0 or higher with minimum 600 dpi resolution - GSI Rule 3-1 (1)"
+		self.fields['electronic_plan_plan_features'].label = "All plan features black ink on white background with no ornate fonts - GSI Rule 3-3(1)"
+		self.fields['electronic_plan_no_signatures'].label = "No signatures on plan - GSI Rule 3-3(7)"
+		self.fields['electronic_plan_plan_complies'].label = "Plan complies with all standards for electronic submissions approved by S.G. GSI Rule 3-3 (12)"

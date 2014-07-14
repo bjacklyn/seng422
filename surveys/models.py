@@ -51,3 +51,34 @@ class Survey(models.Model):
     main_body_of_plan_railway_plan = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
     main_body_of_plan_water_body_access = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
     main_body_of_plan_unsurveyed_land = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+
+	# Scenery ----------------------------------------------------------------------------
+    scenery_status_adjacent_roads = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    scenery_parcel_boundaries = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    scenery_description_surrounding_lands = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    scenery_primary_parcel_designations = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    scenery_existing_road_names = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    scenery_roads_trails_seismic_lines = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    scenery_rem_added = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+
+	# Deposit Statement ----------------------------------------------------------------------------
+    deposit_statement_plan_lies_within = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    deposit_statement_leave_seven_cm = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+
+	# Integrated Survey Area ----------------------------------------------------------------------------
+    integrated_survey_area_grid_bearing = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    integrated_survey_area_control_monuments_tied = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    integrated_survey_area_meets_accuracy = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    integrated_survey_area_control_monuments_shown = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+
+	# Miscellaneous ----------------------------------------------------------------------------
+    miscellaneous_spelling_check = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    miscellaneous_standard_plan_size = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    miscellaneous_oriented_north = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    miscellaneous_notation = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+
+	# Electronic Plan ----------------------------------------------------------------------------
+    electronic_plan_plan_image = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    electronic_plan_plan_features = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    electronic_plan_no_signatures = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
+    electronic_plan_plan_complies = models.CharField(max_length=1, choices=SURVEY_CHOICES, default='U')
