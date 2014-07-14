@@ -28,12 +28,51 @@
 				{% endif %}
 			</div>
 
-			<!-- Description -->
+			<!-- Description, Weather/Mapping -->
 			<div class="row form-group">
 				<div class="col-md-8">
 					<span>{{ create_survey_form.description.errors }}</span>
 					{{ create_survey_form.description.label_tag }}
 					{{ create_survey_form.description }}
+				</div>
+				{% if show_map_and_weather_button %}
+				<div class="col-md-4">
+					<a id="map_and_weather_fancybox" href="#map_and_weather" class="fancybox btn btn-primary btn-lg" role="button" style="margin-top: 20px; float:right;">View Map and Weather</a>
+				</div>
+				{% endif %}
+			</div>
+
+			<script>
+				$(document).ready(function() {
+				  $.simpleWeather({
+					location: '{{ create_survey_form.address.value }}',
+					woeid: '',
+					unit: 'f',
+					success: function(weather) {
+					  html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
+					  html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+					  html += '<li class="currently">'+weather.currently+'</li>';
+					  html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+				  
+					  $("#weather").html(html);
+					},
+					error: function(error) {
+					  $("#weather").html('<p>'+error+'</p>');
+					}
+				  });
+					
+					// Initialize fancybox popup
+					$("#map_and_weather_fancybox").fancybox();
+				});
+			</script>
+
+			<div style="display: none">
+				<div id="map_and_weather">
+					<!-- Google Maps Embedded iframe -->
+					<iframe width="600" height="450" frameborder="0" style="border:0"
+					  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBH0-7vqBjL1-MZtWOOv2PsSDh97vX9lkk&q=Space+Needle,Seattle+WA">
+					</iframe>
+					<div id="weather"></div>
 				</div>
 			</div>
 
