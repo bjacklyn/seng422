@@ -23,6 +23,7 @@
 				
 				<th><a style="cursor: move;">Title</a></th>
 				<th><a style="cursor: move;">Date</a></th>
+				<th><a style="cursor: move;">Status</a></th>
 
 				{% if group == 'Manager' %}
 					<th><a style="cursor: move;">Surveyor</a></th>
@@ -44,7 +45,13 @@
 				
 				<td><a href='surveys/display/{{ survey.id }}'> {{ survey.title }} </a></td>
 				<td>{{ survey.date_created }}</td>
-				
+			
+				{% if survey.completed == 'I' %}
+					<td>Incomplete</td>
+				{% else %}
+					<td>Complete</td>
+				{% endif %}
+
 				{% if group == 'Manager' %}
 					<td>{{ survey.assignee }}</td>
 				{% else %}
