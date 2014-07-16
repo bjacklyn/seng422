@@ -10,7 +10,7 @@ class HorizontalRadioRenderer(forms.RadioSelect.renderer):
 class CreateSurveyForm(forms.ModelForm):
 	class Meta:
 		model = Survey
-		exclude = ('date_created',)
+		exclude = ('date_created', 'completed',)
 		widgets = {
             'description': forms.Textarea(attrs={'rows':4})
         }

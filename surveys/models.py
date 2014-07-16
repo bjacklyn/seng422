@@ -16,6 +16,16 @@ class Survey(models.Model):
 
     file_number = models.PositiveIntegerField(blank=False)
 
+
+    # Survey Completion
+    SURVEY_COMPLETED_CHOICES = (
+        ('C', 'Complete'),
+        ('I', 'Incomplete'),
+    )
+
+    completed = models.CharField(max_length=1, choices=SURVEY_COMPLETED_CHOICES, blank=False, default='I')
+
+
     # Plan Title ----------------------------------------------------------------------------
     SURVEY_CHOICES = (
         ('U', 'Unanswered'),

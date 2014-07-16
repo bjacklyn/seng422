@@ -88,6 +88,7 @@ def display_survey(request, survey_id):
 		'create_survey_form': create_survey_form,
 		'page_label': 'Survey ',
 		'survey_id': survey_id,
+		'survey_completed': True if survey.completed == 'C' else False,
 		'cancel_button_text': 'Back',
 		'show_edit_button': True if group == 'Manager' else False,
 		'edit_button_text': 'Edit Survey',
@@ -158,6 +159,20 @@ def delete_surveys(request):
 			Survey.objects.filter(id=id, creator=request.user).delete()
 
 	return HttpResponseRedirect(reverse('list_surveys'))
+
+@login_required
+@csrf_protect
+def complete_survey(request):
+	if not request.user.groups.all()[0].name == 'Surveyor':
+		return HttpResponseForbidden()
+
+	if request.method == 'POST':
+		survey_id = request.POST.get('survey')
+		survey = Survey.objects.get(pk=survey_id)
+		survey.completed = 'C'
+		survey.save()
+
+	return HttpResponseRedirect(reverse('display_survey', args=(survey_id,)))
 
 @login_required	
 def cancel_create_survey(request):
