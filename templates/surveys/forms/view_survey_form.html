@@ -1,0 +1,27 @@
+<div class="panel panel-default" style="margin-top: 60px;">
+	{% if group == 'Surveyor' %}
+		{% if not survey_completed %}
+		<div style="padding-bottom: 20px;">
+			<form action="/surveys/complete" method="post">
+				{% csrf_token %}
+	  			<input type="text" class="hidden" name="survey" value="{{ survey_id }}">
+				<h1><input type="submit" value="Complete Survey" class="btn btn-success btn-lg active" role="button" style="margin-right: 15px; float: right;" /></h1>
+			</form>
+		</div>
+		{% else %}
+			<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
+		{% endif %}
+	{% else %}
+		{% if survey_completed and not show_create_button %}
+			<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
+		{% elif not survey_completed and not show_create_button %}
+			<p class="bg-warning text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-remove" /> Survey Incomplete</p>
+		{% endif %}
+	{% endif %}
+  	<div class="panel-body">
+		{{ create_survey_form.errors }}
+		<form method="post">
+			{% include "surveys/forms/survey_information.html" %}    
+		</form>
+	</div>
+</div>

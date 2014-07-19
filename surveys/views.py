@@ -1,5 +1,5 @@
 from surveys.models import Survey
-from surveys.forms import CreateSurveyForm
+from surveys.forms import CreateSurveyForm, CompleteSurveyForm
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
@@ -82,13 +82,15 @@ def display_survey(request, survey_id):
 	create_survey_form = CreateSurveyForm(
 							instance=survey,
 							disabled=True)
-	
+
+	complete_survey_form = CompleteSurveyForm()
+
 	context = RequestContext(request, {
 		'group': group,
 		'create_survey_form': create_survey_form,
 		'page_label': 'Survey ',
 		'survey_id': survey_id,
-		'survey_completed': True if survey.completed == 'C' else False,
+		'survey_completed': True if survey.status == 'C' else False,
 		'cancel_button_text': 'Back',
 		'show_edit_button': True if group == 'Manager' else False,
 		'edit_button_text': 'Edit Survey',
