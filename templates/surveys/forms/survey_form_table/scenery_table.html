@@ -1,56 +1,129 @@
+{% if survey_requirements_form and not survey_answers_form %}		
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_status_adjacent_roads.label_tag }}
+			{{ survey_requirements_form.scenery_status_adjacent_roads.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_status_adjacent_roads }}
+			{{ survey_requirements_form.scenery_status_adjacent_roads }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_parcel_boundaries.label_tag }}
+			{{ survey_requirements_form.scenery_parcel_boundaries.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_parcel_boundaries }}
+			{{ survey_requirements_form.scenery_parcel_boundaries }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_description_surrounding_lands.label_tag }}
+			{{ survey_requirements_form.scenery_description_surrounding_lands.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_description_surrounding_lands }}
+			{{ survey_requirements_form.scenery_description_surrounding_lands }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_primary_parcel_designations.label_tag }}
+			{{ survey_requirements_form.scenery_primary_parcel_designations.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_primary_parcel_designations }}
+			{{ survey_requirements_form.scenery_primary_parcel_designations }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_existing_road_names.label_tag }}
+			{{ survey_requirements_form.scenery_existing_road_names.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_existing_road_names }}
+			{{ survey_requirements_form.scenery_existing_road_names }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_roads_trails_seismic_lines.label_tag }}
+			{{ survey_requirements_form.scenery_roads_trails_seismic_lines.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_roads_trails_seismic_lines }}
+			{{ survey_requirements_form.scenery_roads_trails_seismic_lines }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.scenery_rem_added.label_tag }}
+			{{ survey_requirements_form.scenery_rem_added.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.scenery_rem_added }}
+			{{ survey_requirements_form.scenery_rem_added }}
 		</td>
 	</tr>
+{% else %}
+	{% if survey_requirements_form.scenery_status_adjacent_roads.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_status_adjacent_roads_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_status_adjacent_roads_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.scenery_parcel_boundaries.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_parcel_boundaries_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_parcel_boundaries_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.scenery_description_surrounding_lands.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_description_surrounding_lands_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_description_surrounding_lands_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.scenery_primary_parcel_designations.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_primary_parcel_designations_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_primary_parcel_designations_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.scenery_existing_road_names.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_existing_road_names_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_existing_road_names_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.scenery_roads_trails_seismic_lines.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_roads_trails_seismic_lines_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_roads_trails_seismic_lines_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.scenery_rem_added.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.scenery_rem_added_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.scenery_rem_added_completed }}
+		</td>
+	</tr>
+	{% endif %}
+{% endif %}

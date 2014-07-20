@@ -43,19 +43,19 @@
 					</td>
 				{% endif %}
 				
-				<td><a href='surveys/display/{{ survey.id }}'> {{ survey.title }} </a></td>
-				<td>{{ survey.date_created }}</td>
+				<td><a href='surveys/display/{{ survey.id }}'> {{ survey.info.title }} </a></td>
+				<td>{{ survey.info.date_created }}</td>
 			
-				{% if survey.completed == 'I' %}
+				{% if survey.status == 'I' %}
 					<td>Incomplete</td>
 				{% else %}
 					<td>Complete</td>
 				{% endif %}
 
 				{% if group == 'Manager' %}
-					<td>{{ survey.assignee }}</td>
+					<td>{{ survey.info.assignee }}</td>
 				{% else %}
-					<td>{{ survey.creator }}</td>
+					<td>{{ survey.info.creator }}</td>
 				{% endif %}
 			</tr>
 		{% endfor %}

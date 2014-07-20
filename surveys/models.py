@@ -1,7 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class CompletedSurvey(models.Model):
+class SurveyInfo(models.Model):
+    # Mandatory fields ----------------------------------------------------------------------------
+    creator = models.ForeignKey(User, blank=False, related_name='survey_creator')
+    assignee = models.ForeignKey(User, blank=False, related_name='survey_assignee')
+
+    date_created = models.DateTimeField('date created', editable=False, auto_now_add=True)
+
+    title = models.CharField(max_length=100, blank=False)
+    address = models.CharField(max_length=100, blank=False)
+    land_district = models.CharField(max_length=100, blank=False)
+    description = models.CharField(max_length=255, blank=False)
+
+    file_number = models.PositiveIntegerField(blank=False)
+
+class SurveyAnswers(models.Model):
     SURVEY_COMPLETE_CHOICES = (
         ('Y', 'Yes'),
         ('N', 'No'),
@@ -68,32 +82,7 @@ class CompletedSurvey(models.Model):
     electronic_plan_no_signatures_completed = models.CharField(max_length=1, choices=SURVEY_COMPLETE_CHOICES, blank=True, default='N')
     electronic_plan_plan_complies_completed = models.CharField(max_length=1, choices=SURVEY_COMPLETE_CHOICES, blank=True, default='N')
 
-# Create your models here.
-class Survey(models.Model):
-    # Mandatory fields ----------------------------------------------------------------------------
-    creator = models.ForeignKey(User, blank=False, related_name='survey_creator')
-    assignee = models.ForeignKey(User, blank=False, related_name='survey_assignee')
-
-    date_created = models.DateTimeField('date created', editable=False, auto_now_add=True)
-
-    title = models.CharField(max_length=100, blank=False)
-    address = models.CharField(max_length=100, blank=False)
-    land_district = models.CharField(max_length=100, blank=False)
-    description = models.CharField(max_length=255, blank=False)
-
-    file_number = models.PositiveIntegerField(blank=False)
-
-
-    # Survey Status
-    SURVEY_STATUS_CHOICES = (
-        ('C', 'Complete'),
-        ('I', 'Incomplete'),
-    )
-
-    status = models.CharField(max_length=1, choices=SURVEY_STATUS_CHOICES, blank=False, default='I')
-    completed_survey = models.ForeignKey(CompletedSurvey, blank=True, null=True)
-
-    # Plan Title ----------------------------------------------------------------------------
+class SurveyRequirements(models.Model):
     SURVEY_CREATE_CHOICES = (
         ('U', 'Unanswered'),
         ('Y', 'Yes'),
@@ -160,3 +149,17 @@ class Survey(models.Model):
     electronic_plan_plan_features = models.CharField(max_length=1, choices=SURVEY_CREATE_CHOICES, default='U')
     electronic_plan_no_signatures = models.CharField(max_length=1, choices=SURVEY_CREATE_CHOICES, default='U')
     electronic_plan_plan_complies = models.CharField(max_length=1, choices=SURVEY_CREATE_CHOICES, default='U')
+
+class Survey(models.Model):
+    info = models.ForeignKey(SurveyInfo, blank=False, null=False)
+    requirements = models.ForeignKey(SurveyRequirements, blank=False, null=False)
+    answers = models.ForeignKey(SurveyAnswers, blank=True, null=True)
+
+    # Survey Status
+    SURVEY_STATUS_CHOICES = (
+        ('C', 'Complete'),
+        ('I', 'Incomplete'),
+    )
+    status = models.CharField(max_length=1, choices=SURVEY_STATUS_CHOICES, blank=False, default='I')
+
+    

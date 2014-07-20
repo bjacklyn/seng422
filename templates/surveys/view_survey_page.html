@@ -1,0 +1,11 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+	<div style="padding-bottom: 20px;">
+		<h1>
+			<a href="/logout" class="btn btn-primary btn-lg active" role="button" style="float: right;">Logout</a>
+		</h1>
+	</div>
+	{% include "surveys/forms/view_survey_form.html" %}     
+	
+{% endblock %}

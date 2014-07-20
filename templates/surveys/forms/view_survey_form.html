@@ -1,27 +1,134 @@
 <div class="panel panel-default" style="margin-top: 60px;">
-	{% if group == 'Surveyor' %}
-		{% if not survey_completed %}
-		<div style="padding-bottom: 20px;">
-			<form action="/surveys/complete" method="post">
-				{% csrf_token %}
-	  			<input type="text" class="hidden" name="survey" value="{{ survey_id }}">
-				<h1><input type="submit" value="Complete Survey" class="btn btn-success btn-lg active" role="button" style="margin-right: 15px; float: right;" /></h1>
-			</form>
-		</div>
-		{% else %}
-			<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
-		{% endif %}
+	{% if survey_completed %}
+		<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
 	{% else %}
-		{% if survey_completed and not show_create_button %}
-			<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
-		{% elif not survey_completed and not show_create_button %}
-			<p class="bg-warning text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-remove" /> Survey Incomplete</p>
-		{% endif %}
+		<p class="bg-warning text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-remove" /> Survey Incomplete</p>
 	{% endif %}
   	<div class="panel-body">
 		{{ create_survey_form.errors }}
 		<form method="post">
+			{% csrf_token %}
 			{% include "surveys/forms/survey_information.html" %}    
+			
+			<!-- A- Plan Title Table -->
+			<div class="panel panel-default">
+				<div class="panel-heading">A - Plan Title</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/plan_title_table.html"%}
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- B - Main Body of Plan -->
+			<div class="panel panel-default">
+				<div class="panel-heading">B - Main Body of Plan</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/main_body_table.html"%}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- C - Scenery -->
+			<div class="panel panel-default">
+				<div class="panel-heading">C - Scenery</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/scenery_table.html"%}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- D - Deposit Statement -->
+			<div class="panel panel-default">
+				<div class="panel-heading">D - Deposit Statement</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/deposit_statement_table.html"%}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- E - Integrated Survey Area -->
+			<div class="panel panel-default">
+				<div class="panel-heading">E - Integrated Survey Area</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/integrated_survey_area_table.html"%}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- F - Miscellaneous -->
+			<div class="panel panel-default">
+				<div class="panel-heading">F - Miscellaneous</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/miscellaneous_table.html"%}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- G - Electronic Plan -->
+			<div class="panel panel-default">
+				<div class="panel-heading">G - Electronic Plan</div>	
+				<table class="table table-striped">
+					<thead>
+						<tr>							
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% include "surveys/forms/survey_form_table/electronic_plan_table.html"%}
+					</tbody>
+				</table>
+			</div>
+			<input type="text" class="hidden" name="survey" value="{{ survey_id }}">
+			{% if group == 'Surveyor' %}
+			<h1><input type="submit" value="Complete Survey" class="btn btn-success btn-lg active" role="button" style="margin-right: 15px; float: right;" /></h1>
+			{% endif %}
+			{% if show_edit_button %}
+			<a href="edit/{{ survey_id }}" class="btn btn-primary btn-lg active" role="button" style="float:right; margin-left: 10px;">{{ edit_button_text }}</a>
+			{% endif%}
+			<a href="cancel" class="btn btn-primary btn-lg active" role="button" style="float:right;">{{ cancel_button_text }}</a>
 		</form>
 	</div>
 </div>

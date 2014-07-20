@@ -5,21 +5,21 @@
 <!-- Title, Assignee/Creator -->
 <div class="row form-group">
 	<div class="col-md-8">
-		<span>{{ create_survey_form.title.errors }}</span>
-		{{ create_survey_form.title.label_tag}}
-		{{ create_survey_form.title }}
+		<span>{{ survey_info_form.title.errors }}</span>
+		{{ survey_info_form.title.label_tag}}
+		{{ survey_info_form.title }}
 	</div>
 	{% if group == 'Manager' %}
 	<div class="col-md-4">
-		<span>{{ create_survey_form.assignee.errors }}</span>
-		{{ create_survey_form.assignee.label_tag }}
-		{{ create_survey_form.assignee }}
+		<span>{{ survey_info_form.assignee.errors }}</span>
+		{{ survey_info_form.assignee.label_tag }}
+		{{ survey_info_form.assignee }}
 	</div>
 	{% else %}
 	<div class="col-md-4">
-		<span>{{ create_survey_form.creator.errors }}</span>
-		{{ create_survey_form.creator.label_tag }}
-		{{ create_survey_form.creator }}
+		<span>{{ survey_info_form.creator.errors }}</span>
+		{{ survey_info_form.creator.label_tag }}
+		{{ survey_info_form.creator }}
 	</div>
 	{% endif %}
 </div>
@@ -27,9 +27,9 @@
 <!-- Description, Weather/Mapping -->
 <div class="row form-group">
 	<div class="col-md-8">
-		<span>{{ create_survey_form.description.errors }}</span>
-		{{ create_survey_form.description.label_tag }}
-		{{ create_survey_form.description }}
+		<span>{{ survey_info_form.description.errors }}</span>
+		{{ survey_info_form.description.label_tag }}
+		{{ survey_info_form.description }}
 	</div>
 	{% if show_map_and_weather_button %}
 	<div class="col-md-4">
@@ -48,13 +48,13 @@
 </div>
 
 <script>
-	var encoded_location = encodeURI("{{ create_survey_form.address.value }}");
+	var encoded_location = encodeURI("{{ survey_info_form.address.value }}");
 	var map_src = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBH0-7vqBjL1-MZtWOOv2PsSDh97vX9lkk&q=" + encoded_location;
 	$("iframe").attr("src", map_src);
 
 	$(document).ready(function() {
 	  $.simpleWeather({
-		location: '{{ create_survey_form.address.value }}',
+		location: '{{ survey_info_form.address.value }}',
 		woeid: '',
 		unit: 'f',
 		success: function(weather) {
@@ -78,18 +78,18 @@
 <!-- Address, Land District, File Number -->
 <div class="row form-group">
 	<div class="col-md-4">
-		<span>{{ create_survey_form.address.errors }}</span>
-		{{ create_survey_form.address.label_tag}}
-		{{ create_survey_form.address }}
+		<span>{{ survey_info_form.address.errors }}</span>
+		{{ survey_info_form.address.label_tag}}
+		{{ survey_info_form.address }}
 	</div>
 	<div class="col-md-4">
-		<span>{{ create_survey_form.land_district.errors }}</span>
-		{{ create_survey_form.land_district.label_tag }}
-		{{ create_survey_form.land_district }}
+		<span>{{ survey_info_form.land_district.errors }}</span>
+		{{ survey_info_form.land_district.label_tag }}
+		{{ survey_info_form.land_district }}
 	</div>
 	<div class="col-md-4">
-		<span>{{ create_survey_form.file_number.errors }}</span>
-		{{ create_survey_form.file_number.label_tag }}
-		{{ create_survey_form.file_number }}
+		<span>{{ survey_info_form.file_number.errors }}</span>
+		{{ survey_info_form.file_number.label_tag }}
+		{{ survey_info_form.file_number }}
 	</div>
 </div>

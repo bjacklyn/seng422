@@ -1,16 +1,39 @@
+{% if survey_requirements_form and not survey_answers_form %}	
 	<tr>
 		<td>
-			{{ create_survey_form.deposit_statement_plan_lies_within.label_tag }}
+			{{ survey_requirements_form.deposit_statement_plan_lies_within.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.deposit_statement_plan_lies_within }}
+			{{ survey_requirements_form.deposit_statement_plan_lies_within }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.deposit_statement_leave_seven_cm.label_tag }}
+			{{ survey_requirements_form.deposit_statement_leave_seven_cm.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.deposit_statement_leave_seven_cm }}
+			{{ survey_requirements_form.deposit_statement_leave_seven_cm }}
 		</td>
 	</tr>
+{% else %}
+	{% if survey_requirements_form.deposit_statement_plan_lies_within.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.deposit_statement_plan_lies_within_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.deposit_statement_plan_lies_within_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.deposit_statement_leave_seven_cm.value in "UY"   %}
+	<tr>
+		<td>
+			{{ survey_answers_form.deposit_statement_leave_seven_cm_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.deposit_statement_leave_seven_cm_completed }}
+		</td>
+	</tr>
+	{% endif %}
+{% endif %}	

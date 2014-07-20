@@ -1,5 +1,5 @@
 from surveys.models import Survey
-from surveys.forms import CreateSurveyForm, CompleteSurveyForm
+from surveys.forms import SurveyRequirementsForm, SurveyInfoForm, SurveyAnswersForm
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
@@ -13,9 +13,9 @@ def list_surveys(request):
 
 	surveys = None
 	if request.user.groups.all()[0].name == 'Manager':
-		surveys = Survey.objects.filter(creator__id=request.user.id)
+		surveys = Survey.objects.filter(info__creator_id=request.user.id)
 	else:
-		surveys = Survey.objects.filter(assignee__id=request.user.id)
+		surveys = Survey.objects.filter(info__assignee_id=request.user.id)
 
 	context = RequestContext(request, {
             'user': request.user,
@@ -35,26 +35,33 @@ def create_survey(request):
 
 	template = loader.get_template('surveys/create_survey_page.html')
 
-	create_survey_form = CreateSurveyForm
+	survey_info_form = SurveyInfoForm
+	survey_requirements_form = SurveyRequirementsForm
 
 	if request.method == 'POST':
-		create_survey_form = CreateSurveyForm(request.POST)
+		survey_info_form = SurveyInfoForm(request.POST)
+		survey_requirements_form = SurveyRequirementsForm(request.POST)
 
-		if create_survey_form.is_valid():
-			survey = create_survey_form.save(commit=False)
+		if survey_info_form.is_valid() and survey_requirements_form.is_valid():
+			survey = Survey()
+			
 			survey.creator = request.user
+			survey.info = survey_info_form.save()
+			survey.requirements = survey_requirements_form.save()
+			
 			survey.save()
 			return HttpResponseRedirect(reverse('list_surveys'))
 
 	context = RequestContext(request, {
 			'group': group,
 			'user_id': request.user.id,
-			'create_survey_form': create_survey_form,
+			'survey_info_form': survey_info_form,
+			'survey_requirements_form': survey_requirements_form,
 			'page_label': 'Create a new survey',
-			'show_submit_button': True,
+			#'show_submit_button': True,
 			'cancel_button_text': 'Cancel',
 			'show_create_button': True,
-			'submit_button_text': 'Create'
+			'create_button_text': 'Create'
             })
 
 	return HttpResponse(template.render(context))
@@ -67,9 +74,9 @@ def display_survey(request, survey_id):
 	survey = None
 	try:
 		if group == 'Manager':
-			survey = Survey.objects.get(id=survey_id, creator__id=request.user.id)
+			survey = Survey.objects.get(id=survey_id, info__creator_id=request.user.id)
 		else:
-			survey = Survey.objects.get(id=survey_id, assignee__id=request.user.id)
+			survey = Survey.objects.get(id=survey_id, info__assignee_id=request.user.id)
 	except Survey.DoesNotExist:
 		 raise Http404
 
@@ -77,17 +84,16 @@ def display_survey(request, survey_id):
 	if survey is None:
 		return HttpResponseForbidden()
 
-	template = loader.get_template('surveys/create_survey_page.html')
-
-	create_survey_form = CreateSurveyForm(
-							instance=survey,
-							disabled=True)
-
-	complete_survey_form = CompleteSurveyForm()
+	template = loader.get_template('surveys/view_survey_page.html')
+	survey_requirements_form = SurveyRequirementsForm(instance=survey.requirements)
+	survey_info_form = SurveyInfoForm(instance=survey.info, disabled=True)
+	survey_answers_form = SurveyAnswersForm(disabled=True if group == 'Manager' else False)
 
 	context = RequestContext(request, {
 		'group': group,
-		'create_survey_form': create_survey_form,
+		'survey_answers_form': survey_answers_form,
+		'survey_requirements_form': survey_requirements_form,
+		'survey_info_form': survey_info_form,		
 		'page_label': 'Survey ',
 		'survey_id': survey_id,
 		'survey_completed': True if survey.status == 'C' else False,
@@ -105,44 +111,45 @@ def edit_survey(request, survey_id):
 	# Only managers can edit surveys
 	group = request.user.groups.all()[0].name
 	if not group == 'Manager':
-		return HttpResponseForbidden()
+		return HttpResponseForbidden('Forbidden')
 
 	# Get the survey from the database
 	survey = None
 	try:
-		survey = Survey.objects.get(id=survey_id, creator__id=request.user.id)
+		survey = Survey.objects.get(id=survey_id, info__creator_id=request.user.id)
 	except Survey.DoesNotExist:
 		 raise Http404
 
 	# User does not have access to this survey
 	if survey is None:
-		return HttpResponseForbidden()
+		return HttpResponseForbidden('Forbidden')
 
 	template = loader.get_template('surveys/create_survey_page.html')
 
-	create_survey_form = None
+	survey_requirements_form = SurveyRequirementsForm(instance=survey.requirements)
+	survey_info_form = SurveyInfoForm(instance=survey.info)
 
 	if request.method == 'POST':
-		create_survey_form = CreateSurveyForm(request.POST, instance=survey)
+		survey_requirements_form = SurveyRequirementsForm(request.POST, instance=survey.requirements)
+		survey_info_form = SurveyInfoForm(request.POST, instance=survey.info)
 
-		if create_survey_form.is_valid():
-			survey = create_survey_form.save(commit=False)
-			survey.creator = request.user
+		if survey_requirements_form.is_valid() and survey_info_form.is_valid():
+			
+			survey.info = survey_info_form.save()
+			survey.requirements = survey_requirements_form.save()
 			survey.save()
-			#return HttpResponseRedirect(reverse('list_surveys'))
 			return HttpResponseRedirect(reverse('display_survey', args=(survey_id,)))
-	else:
-		create_survey_form = CreateSurveyForm(instance=survey)
 
 	context = RequestContext(request, {
 			'group': group,
 			'user_id': request.user.id,
-            'create_survey_form': create_survey_form,
-			'page_label': 'Create a new survey',
-			'show_submit_button': True,
+            'survey_requirements_form': survey_requirements_form,
+			'survey_info_form': survey_info_form,	
+			'page_label': 'Edit survey',
+			#'show_submit_button': True,
 			'cancel_button_text': 'Cancel',
 			'show_create_button': True,
-			'submit_button_text': 'Update'
+			'create_button_text': 'Update'
             })
 
 	return HttpResponse(template.render(context))

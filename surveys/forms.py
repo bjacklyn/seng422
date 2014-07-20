@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import Select
 from django.contrib.auth.models import User, Group
-from surveys.models import Survey, CompletedSurvey
+from surveys.models import Survey, SurveyAnswers, SurveyRequirements, SurveyInfo
 from django.utils.safestring import mark_safe
 
 class HorizontalRadioRenderer(forms.RadioSelect.renderer):
@@ -16,30 +16,46 @@ class SurveyForm(forms.ModelForm):
 			return {}
 
 	def __init__(self, *args, **kwargs):
+		disabled = kwargs.pop('disabled', False)
 		super(SurveyForm, self).__init__(*args, **kwargs)
 		
-		
-class CompleteSurveyForm(SurveyForm):
-	class Meta:
-		model = CompletedSurvey
-		fields = '__all__'
-		
-	def __init__(self, *args, **kwargs):
-		disabled = kwargs.pop('disabled', False)
-		super(CompleteSurveyForm, self).__init__(*args, **kwargs)
-
         # Add form-control class to all fields
 		for field in self.fields:
 			self.fields[field].widget.attrs['class'] = 'form-control'
 			
 			if disabled:
 				self.fields[field].widget.attrs['disabled'] = 'disabled'
+				
+			# Change all checklist dropdown fields to radioselects
+			if self.fields[field].widget.__class__.__name__ == Select().__class__.__name__ and not field.startswith("assignee"):
+				if field.endswith("completed"):
+					self.fields[field].widget = forms.RadioSelect(choices=SurveyAnswers.SURVEY_COMPLETE_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
+				else:
+					self.fields[field].widget = forms.RadioSelect(choices=SurveyRequirements.SURVEY_CREATE_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
 		
-		# Change all checklist fields to radioselects instead of dropdowns
-		for field in self.fields: 
-			# Untested
-			if self.fields[field].widget.__class__.__name__ == Select().__class__.__name__:
-				self.fields[field].widget = forms.RadioSelect(choices=CompletedSurvey.SURVEY_COMPLETE_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
+
+class SurveyInfoForm(SurveyForm):
+	class Meta: 
+		model = SurveyInfo
+		exclude = ('date_created', 'status',)
+		widgets = {
+            'description': forms.Textarea(attrs={'rows':4})
+        }
+		
+	def __init__(self, *args, **kwargs):
+		super(SurveyInfoForm, self).__init__(*args, **kwargs)
+
+        # Remove default empty label "------" and only show user's in surveyor group
+		self.fields['assignee'].empty_label = None
+		self.fields['assignee'].queryset = User.objects.filter(groups__name="Surveyor")
+		
+class SurveyAnswersForm(SurveyForm):
+	class Meta:
+		model = SurveyAnswers
+		fields = '__all__'
+		
+	def __init__(self, *args, **kwargs):
+		super(SurveyAnswersForm, self).__init__(*args, **kwargs)
 		
 		# Plan Title ----------------------------------------------------------------------------
 		self.fields['plan_title_type_of_plan_completed'].label = "Type of Plan"
@@ -103,33 +119,13 @@ class CompleteSurveyForm(SurveyForm):
 		self.fields['electronic_plan_plan_complies_completed'].label = "Plan complies with all standards for electronic submissions approved by S.G. GSI Rule 3-3 (12)"
 		
 		
-class CreateSurveyForm(SurveyForm):
+class SurveyRequirementsForm(SurveyForm):
 	class Meta:
-		model = Survey
-		exclude = ('date_created', 'status',)
-		widgets = {
-            'description': forms.Textarea(attrs={'rows':4})
-        }
+		model = SurveyRequirements
+		fields = '__all__'
 
 	def __init__(self, *args, **kwargs):
-		disabled = kwargs.pop('disabled', False)
-		super(CreateSurveyForm, self).__init__(*args, **kwargs)
-
-        # Add form-control class to all fields
-		for field in self.fields:
-			self.fields[field].widget.attrs['class'] = 'form-control'
-			
-			if disabled:
-				self.fields[field].widget.attrs['disabled'] = 'disabled'
-
-        # Remove default empty label "------" and only show user's in surveyor group
-		self.fields['assignee'].empty_label = None
-		self.fields['assignee'].queryset = User.objects.filter(groups__name="Surveyor")
-
-		# Change all checklist fields to radioselects instead of dropdowns
-		for field in self.fields:
-			if field.startswith('plan') or field.startswith('main') or field.startswith('scenery') or field.startswith('deposit') or field.startswith('integrated') or field.startswith('miscellaneous') or field.startswith('electronic'):
-				self.fields[field].widget = forms.RadioSelect(choices=Survey.SURVEY_CREATE_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
+		super(SurveyRequirementsForm, self).__init__(*args, **kwargs)
 		
 		# Plan Title ----------------------------------------------------------------------------
 		self.fields['plan_title_type_of_plan'].label = "Type of Plan"
