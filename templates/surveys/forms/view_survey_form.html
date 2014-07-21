@@ -1,9 +1,17 @@
 <div class="panel panel-default" style="margin-top: 60px;">
 	{% if survey_completed %}
 		<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
+		{% if group == 'Manager' %}
+		<form action="/surveys/reopen" method="post">
+			{% csrf_token %}
+			<input type="text" class="hidden" name="survey" value="{{ survey_id }}">
+			<input type="submit" value="Reopen Survey" class="btn btn-success btn-lg active" role="button" style="margin-right: 15px; float: right;" />
+		</form>
+		{% endif %}
 	{% else %}
 		<p class="bg-warning text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-remove" /> Survey Incomplete</p>
 	{% endif %}
+
   	<div class="panel-body">
 		{{ create_survey_form.errors }}
 		<form method="post">

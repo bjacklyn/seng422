@@ -86,7 +86,7 @@ def display_survey(request, survey_id):
 
 	survey_info_form = SurveyInfoForm(instance=survey.info, disabled=True)
 	survey_requirements_form = SurveyRequirementsForm(instance=survey.requirements)
-	survey_answers_form = SurveyAnswersForm(disabled=disabled)
+	survey_answers_form = SurveyAnswersForm(instance=survey.answers, disabled=disabled)
 
 	if request.method == 'POST':
 		survey_answers_form = SurveyAnswersForm(request.POST, instance=survey.answers, survey_requirements=survey.requirements)
@@ -176,3 +176,17 @@ def delete_surveys(request):
 @login_required(login_url='/')
 def cancel_create_survey(request):
 	return HttpResponseRedirect(reverse('list_surveys'))
+
+@csrf_protect
+@group_required('Manager')
+@login_required(login_url='/')
+def reopen_survey(request):
+	if request.method == 'POST':
+		survey_id = request.POST.get('survey')
+		survey = Survey.objects.get(pk=survey_id, info__creator_id=request.user.id)
+
+		if survey is not None:
+			survey.status = Survey.SURVEY_INCOMPLETE
+			survey.save()
+
+	return HttpResponseRedirect(reverse('display_survey', args=(survey_id,)))
