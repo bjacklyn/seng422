@@ -33,7 +33,8 @@
 	</tr>
 {% else %}
 	{% if survey_requirements_form.integrated_survey_area_grid_bearing.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.integrated_survey_area_grid_bearing_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_grid_bearing.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.integrated_survey_area_grid_bearing_completed.label_tag }}
 		</td>
@@ -43,7 +44,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.integrated_survey_area_control_monuments_tied.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.integrated_survey_area_control_monuments_tied_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_control_monuments_tied.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.integrated_survey_area_control_monuments_tied_completed.label_tag }}
 		</td>
@@ -53,7 +55,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.integrated_survey_area_meets_accuracy.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.integrated_survey_area_meets_accuracy_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_meets_accuracy.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.integrated_survey_area_meets_accuracy_completed.label_tag }}
 		</td>
@@ -63,7 +66,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.integrated_survey_area_control_monuments_shown.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.integrated_survey_area_control_monuments_shown_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_control_monuments_shown.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.integrated_survey_area_control_monuments_shown_completed.label_tag }}
 		</td>

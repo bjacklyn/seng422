@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.core.urlresolvers import reverse
 
-@login_required
+@login_required(login_url='/')
 def list_surveys(request):
 	template = loader.get_template('surveys/surveys_list_page.html')
 
@@ -25,13 +25,13 @@ def list_surveys(request):
 
 	return HttpResponse(template.render(context))
 
-@login_required
 @csrf_protect
+@login_required(login_url='/')
 def create_survey(request):
 	# Only managers can see the create page
 	group = request.user.groups.all()[0].name
 	if not group == 'Manager':
-		return HttpResponseForbidden()
+		return HttpResponseForbidden('Forbidden')
 
 	template = loader.get_template('surveys/create_survey_page.html')
 
@@ -45,7 +45,6 @@ def create_survey(request):
 		if survey_info_form.is_valid() and survey_requirements_form.is_valid():
 			survey = Survey()
 			
-			survey.creator = request.user
 			survey.info = survey_info_form.save()
 			survey.requirements = survey_requirements_form.save()
 			
@@ -58,7 +57,6 @@ def create_survey(request):
 			'survey_info_form': survey_info_form,
 			'survey_requirements_form': survey_requirements_form,
 			'page_label': 'Create a new survey',
-			#'show_submit_button': True,
 			'cancel_button_text': 'Cancel',
 			'show_create_button': True,
 			'create_button_text': 'Create'
@@ -66,7 +64,8 @@ def create_survey(request):
 
 	return HttpResponse(template.render(context))
 
-@login_required
+@csrf_protect
+@login_required(login_url='/')
 def display_survey(request, survey_id):
 	group = request.user.groups.all()[0].name
 
@@ -82,12 +81,20 @@ def display_survey(request, survey_id):
 
 	# User does not have access to this survey
 	if survey is None:
-		return HttpResponseForbidden()
+		return HttpResponseForbidden('Forbidden')
 
-	template = loader.get_template('surveys/view_survey_page.html')
 	survey_requirements_form = SurveyRequirementsForm(instance=survey.requirements)
 	survey_info_form = SurveyInfoForm(instance=survey.info, disabled=True)
 	survey_answers_form = SurveyAnswersForm(disabled=True if group == 'Manager' else False)
+
+	if request.method == 'POST':
+		survey_answers_form = SurveyAnswersForm(request.POST, instance=survey.answers, survey_requirements=survey.requirements)
+		if survey_answers_form.is_valid():
+			print "yay valid"
+			survey.status = 'C'
+			survey.save()
+
+	template = loader.get_template('surveys/view_survey_page.html')
 
 	context = RequestContext(request, {
 		'group': group,
@@ -105,8 +112,8 @@ def display_survey(request, survey_id):
 
 	return HttpResponse(template.render(context))
 
-@login_required
 @csrf_protect
+@login_required(login_url='/')
 def edit_survey(request, survey_id):
 	# Only managers can edit surveys
 	group = request.user.groups.all()[0].name
@@ -146,7 +153,6 @@ def edit_survey(request, survey_id):
             'survey_requirements_form': survey_requirements_form,
 			'survey_info_form': survey_info_form,	
 			'page_label': 'Edit survey',
-			#'show_submit_button': True,
 			'cancel_button_text': 'Cancel',
 			'show_create_button': True,
 			'create_button_text': 'Update'
@@ -154,35 +160,43 @@ def edit_survey(request, survey_id):
 
 	return HttpResponse(template.render(context))
 
-@login_required
 @csrf_protect
+@login_required(login_url='/')
 def delete_surveys(request):
 	# Only managers can delete surveys
 	if not request.user.groups.all()[0].name == 'Manager':
-		return HttpResponseForbidden()
+		return HttpResponseForbidden('Forbidden')
 
 	if request.method == 'POST':
 		survey_ids = request.POST.getlist('checked_surveys')
 
 		for id in survey_ids:
-			Survey.objects.filter(id=id, creator=request.user).delete()
+			Survey.objects.filter(id=id, info__creator_id=request.user.id).delete()
 
 	return HttpResponseRedirect(reverse('list_surveys'))
 
-@login_required
 @csrf_protect
+@login_required(login_url='/')
 def complete_survey(request):
+	# Only surveyors can complete surveys
 	if not request.user.groups.all()[0].name == 'Surveyor':
-		return HttpResponseForbidden()
+		return HttpResponseForbidden('Forbidden')
+
+	survey_complete = 'C'
 
 	if request.method == 'POST':
 		survey_id = request.POST.get('survey')
 		survey = Survey.objects.get(pk=survey_id)
-		survey.completed = 'C'
-		survey.save()
+
+		survey_answers_form = SurveyAnswersForm(request.POST, instance=survey.answers, survey_requirements=survey.requirements)
+		if survey_answers_form.is_valid():
+			print "yay valid"
+
+			survey.status = survey_complete
+			survey.save()
 
 	return HttpResponseRedirect(reverse('display_survey', args=(survey_id,)))
 
-@login_required	
+@login_required(login_url='/')
 def cancel_create_survey(request):
 	return HttpResponseRedirect(reverse('list_surveys'))

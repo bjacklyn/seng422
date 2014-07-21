@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.models import model_to_dict
 from django.forms.widgets import Select
 from django.contrib.auth.models import User, Group
 from surveys.models import Survey, SurveyAnswers, SurveyRequirements, SurveyInfo
@@ -27,7 +28,7 @@ class SurveyForm(forms.ModelForm):
 				self.fields[field].widget.attrs['disabled'] = 'disabled'
 				
 			# Change all checklist dropdown fields to radioselects
-			if self.fields[field].widget.__class__.__name__ == Select().__class__.__name__ and not field.startswith("assignee"):
+			if self.fields[field].widget.__class__.__name__ == Select().__class__.__name__ and not field.startswith("assignee") and not field.startswith("creator"):
 				if field.endswith("completed"):
 					self.fields[field].widget = forms.RadioSelect(choices=SurveyAnswers.SURVEY_COMPLETE_CHOICES, renderer=HorizontalRadioRenderer, attrs=self.get_disabled(disabled))
 				else:
@@ -48,13 +49,32 @@ class SurveyInfoForm(SurveyForm):
         # Remove default empty label "------" and only show user's in surveyor group
 		self.fields['assignee'].empty_label = None
 		self.fields['assignee'].queryset = User.objects.filter(groups__name="Surveyor")
+
 		
 class SurveyAnswersForm(SurveyForm):
 	class Meta:
 		model = SurveyAnswers
 		fields = '__all__'
+
+	def clean(self):
+		cleaned_data = super(SurveyAnswersForm, self).clean()
+		
+		if self.survey_requirements is not None:
+			for field, value in cleaned_data.iteritems():
+				corresponding_field = field[:-len('_completed')]
+				print corresponding_field + " " + field
+				required = True if self.survey_requirements[corresponding_field] == 'Y' else False
+				if required and value != 'Y':
+					self._errors[field] = 'This field must be part of your survey report.'
+					print field + " has errors"
+
+		return cleaned_data
 		
 	def __init__(self, *args, **kwargs):
+		survey_requirements = kwargs.pop('survey_requirements', None)
+		if survey_requirements is not None:
+			self.survey_requirements = model_to_dict(survey_requirements)
+
 		super(SurveyAnswersForm, self).__init__(*args, **kwargs)
 		
 		# Plan Title ----------------------------------------------------------------------------

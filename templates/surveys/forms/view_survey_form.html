@@ -122,8 +122,8 @@
 				</table>
 			</div>
 			<input type="text" class="hidden" name="survey" value="{{ survey_id }}">
-			{% if group == 'Surveyor' %}
-			<h1><input type="submit" value="Complete Survey" class="btn btn-success btn-lg active" role="button" style="margin-right: 15px; float: right;" /></h1>
+			{% if group == 'Surveyor' and not survey_completed %}
+			<h1><input type="submit" value="Complete Survey" class="btn btn-success btn-lg active" role="button" style="margin-left: 15px; float: right;" /></h1>
 			{% endif %}
 			{% if show_edit_button %}
 			<a href="edit/{{ survey_id }}" class="btn btn-primary btn-lg active" role="button" style="float:right; margin-left: 10px;">{{ edit_button_text }}</a>

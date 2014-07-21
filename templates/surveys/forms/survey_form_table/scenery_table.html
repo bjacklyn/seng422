@@ -57,7 +57,8 @@
 	</tr>
 {% else %}
 	{% if survey_requirements_form.scenery_status_adjacent_roads.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_status_adjacent_roads_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_status_adjacent_roads.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_status_adjacent_roads_completed.label_tag }}
 		</td>
@@ -67,7 +68,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.scenery_parcel_boundaries.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_parcel_boundaries_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_parcel_boundaries.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_parcel_boundaries_completed.label_tag }}
 		</td>
@@ -77,7 +79,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.scenery_description_surrounding_lands.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_description_surrounding_lands_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_description_surrounding_lands.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_description_surrounding_lands_completed.label_tag }}
 		</td>
@@ -87,7 +90,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.scenery_primary_parcel_designations.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_primary_parcel_designations_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_primary_parcel_designations.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_primary_parcel_designations_completed.label_tag }}
 		</td>
@@ -97,7 +101,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.scenery_existing_road_names.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_existing_road_names_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_existing_road_names.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_existing_road_names_completed.label_tag }}
 		</td>
@@ -107,7 +112,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.scenery_roads_trails_seismic_lines.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_roads_trails_seismic_lines_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_roads_trails_seismic_lines.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_roads_trails_seismic_lines_completed.label_tag }}
 		</td>
@@ -117,7 +123,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.scenery_rem_added.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.scenery_rem_added_completed.errors %} class="danger" 
+{% elif survey_requirements_form.scenery_rem_added.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.scenery_rem_added_completed.label_tag }}
 		</td>

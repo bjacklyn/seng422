@@ -145,7 +145,8 @@
 	</tr>
 {% else %}
 	{% if survey_requirements_form.main_body_of_plan_apporopriate_designation.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_apporopriate_designation_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_apporopriate_designation.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_apporopriate_designation_completed.label_tag }}
 		</td>
@@ -155,7 +156,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_essential_dimensions.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_essential_dimensions_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_essential_dimensions.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_essential_dimensions_completed.label_tag }}
 		</td>
@@ -165,7 +167,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_gsi_rule3.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_gsi_rule3_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_gsi_rule3.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_gsi_rule3_completed.label_tag }}
 		</td>
@@ -175,7 +178,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_boundaries_reestablished.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_boundaries_reestablished_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_boundaries_reestablished.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_boundaries_reestablished_completed.label_tag }}
 		</td>
@@ -185,7 +189,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_sufficient_ties.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_sufficient_ties_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_sufficient_ties.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_sufficient_ties_completed.label_tag }}
 		</td>
@@ -195,7 +200,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_monumentation.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_monumentation_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_monumentation.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_monumentation_completed.label_tag }}
 		</td>
@@ -205,7 +211,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_dedicated_road.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_dedicated_road_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_dedicated_road.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_dedicated_road_completed.label_tag }}
 		</td>
@@ -215,7 +222,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_hooked_parcels.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_hooked_parcels_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_hooked_parcels.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_hooked_parcels_completed.label_tag }}
 		</td>
@@ -225,7 +233,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_new_dedicated_road.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_new_dedicated_road_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_new_dedicated_road.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_new_dedicated_road_completed.label_tag }}
 		</td>
@@ -235,7 +244,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_no_text_2mm.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_no_text_2mm_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_no_text_2mm.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_no_text_2mm_completed.label_tag }}
 		</td>
@@ -245,7 +255,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_plotting_scale.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_plotting_scale_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_plotting_scale.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_plotting_scale_completed.label_tag }}
 		</td>
@@ -255,7 +266,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_bold_outline.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_bold_outline_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_bold_outline.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_bold_outline_completed.label_tag }}
 		</td>
@@ -265,7 +277,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_existing_rw.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_existing_rw_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_existing_rw.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_existing_rw_completed.label_tag }}
 		</td>
@@ -275,7 +288,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_bearing_trees_details.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_bearing_trees_details_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_bearing_trees_details.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_bearing_trees_details_completed.label_tag }}
 		</td>
@@ -285,7 +299,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_radius.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_radius_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_radius.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_radius_completed.label_tag }}
 		</td>
@@ -295,7 +310,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_railway_plan.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_railway_plan_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_railway_plan.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_railway_plan_completed.label_tag }}
 		</td>
@@ -305,7 +321,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_water_body_access.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_water_body_access_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_water_body_access.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_water_body_access_completed.label_tag }}
 		</td>
@@ -315,7 +332,8 @@
 	</tr>
 	{% endif %}
 	{% if survey_requirements_form.main_body_of_plan_unsurveyed_land.value in "UY"   %}
-	<tr>
+	<tr {% if survey_answers_form.main_body_of_plan_unsurveyed_land_completed.errors %} class="danger" 
+{% elif survey_requirements_form.main_body_of_plan_unsurveyed_land.value == "Y" %} class="warning" {% endif %}>
 		<td>
 			{{ survey_answers_form.main_body_of_plan_unsurveyed_land_completed.label_tag }}
 		</td>
