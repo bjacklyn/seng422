@@ -1,66 +1,155 @@
+{% if survey_requirements_form and not survey_answers_form %}
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_type_of_plan.label_tag }}
+			{{ survey_requirements_form.plan_title_type_of_plan.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_type_of_plan }}
+			{{ survey_requirements_form.plan_title_type_of_plan }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_legal_description.label_tag }}
+			{{ survey_requirements_form.plan_title_legal_description.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_legal_description }}
+			{{ survey_requirements_form.plan_title_legal_description }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_bcgs_no.label_tag }}
+			{{ survey_requirements_form.plan_title_bcgs_no.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_bcgs_no }}
+			{{ survey_requirements_form.plan_title_bcgs_no }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_scale_and_bar.label_tag }}
+			{{ survey_requirements_form.plan_title_scale_and_bar.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_scale_and_bar }}
+			{{ survey_requirements_form.plan_title_scale_and_bar }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_legend.label_tag }}
+			{{ survey_requirements_form.plan_title_legend.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_legend }}
+			{{ survey_requirements_form.plan_title_legend }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_bearing.label_tag }}
+			{{ survey_requirements_form.plan_title_bearing.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_bearing }}
+			{{ survey_requirements_form.plan_title_bearing }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_notation.label_tag }}
+			{{ survey_requirements_form.plan_title_notation.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_notation }}
+			{{ survey_requirements_form.plan_title_notation }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.plan_title_north_point.label_tag }}
+			{{ survey_requirements_form.plan_title_north_point.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.plan_title_north_point }}
+			{{ survey_requirements_form.plan_title_north_point }}
 		</td>
 	</tr>
-
-
+{% else %}
+	{% if survey_requirements_form.plan_title_type_of_plan.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_type_of_plan_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_type_of_plan.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_type_of_plan_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_type_of_plan_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_legal_description.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_legal_description_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_legal_description.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_legal_description_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_legal_description_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_bcgs_no.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_bcgs_no_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_bcgs_no.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_bcgs_no_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_bcgs_no_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_scale_and_bar.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_scale_and_bar_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_scale_and_bar.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_scale_and_bar_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_scale_and_bar_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_legend.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_legend_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_legend.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_legend_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_legend_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_bearing.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_bearing_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_bearing.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_bearing_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_bearing_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_notation.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_notation_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_notation.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_notation_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_notation_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.plan_title_north_point.value in "UY"   %}
+	<tr {% if survey_answers_form.plan_title_north_point_completed.errors %} class="danger" 
+{% elif survey_requirements_form.plan_title_north_point.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.plan_title_north_point_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.plan_title_north_point_completed }}
+		</td>
+	</tr>
+	{% endif %}
+{% endif %}

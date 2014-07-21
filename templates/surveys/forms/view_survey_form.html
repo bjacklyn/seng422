@@ -1,7 +1,13 @@
 <div class="panel panel-default" style="margin-top: 60px;">
+	{% if survey_completed %}
+		<p class="bg-success text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-ok" /> Survey Complete</p>
+	{% else %}
+		<p class="bg-warning text-right" style="float: right; font-size: 150%;"><span class="glyphicon glyphicon-remove" /> Survey Incomplete</p>
+	{% endif %}
   	<div class="panel-body">
 		{{ create_survey_form.errors }}
 		<form method="post">
+			{% csrf_token %}
 			{% include "surveys/forms/survey_information.html" %}    
 			
 			<!-- A- Plan Title Table -->
@@ -115,19 +121,14 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<div style="overflow: hidden;">
-				{% if show_create_button %}
-				<button class="btn btn-lg btn-primary" type="submit" name="signup" style="float:right; margin-left: 10px;">{{ create_button_text }}</button>
-				{% endif%}
-
-				{% if show_edit_button %}
-				<a href="edit/{{ survey_id }}" class="btn btn-primary btn-lg active" role="button" style="float:right; margin-left: 10px;">{{ edit_button_text }}</a>
-				{% endif%}
-				<a href="cancel" class="btn btn-primary btn-lg active" role="button" style="float:right;">{{ cancel_button_text }}</a>
-			</div>
-			<input type="hidden" name="creator" value="{{ user_id }}" />
-			<input type="hidden" name="next" value="{{ next }}" />
+			<input type="text" class="hidden" name="survey" value="{{ survey_id }}">
+			{% if group == 'Surveyor' and not survey_completed %}
+			<h1><input type="submit" value="Complete Survey" class="btn btn-success btn-lg active" role="button" style="margin-left: 15px; float: right;" /></h1>
+			{% endif %}
+			{% if show_edit_button %}
+			<a href="edit/{{ survey_id }}" class="btn btn-primary btn-lg active" role="button" style="float:right; margin-left: 10px;">{{ edit_button_text }}</a>
+			{% endif%}
+			<a href="cancel" class="btn btn-primary btn-lg active" role="button" style="float:right;">{{ cancel_button_text }}</a>
 		</form>
 	</div>
 </div>

@@ -1,32 +1,79 @@
+{% if survey_requirements_form and not survey_answers_form %}
 	<tr>
 		<td>
-			{{ create_survey_form.electronic_plan_plan_image.label_tag }}
+			{{ survey_requirements_form.electronic_plan_plan_image.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.electronic_plan_plan_image }}
+			{{ survey_requirements_form.electronic_plan_plan_image }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.electronic_plan_plan_features.label_tag }}
+			{{ survey_requirements_form.electronic_plan_plan_features.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.electronic_plan_plan_features }}
+			{{ survey_requirements_form.electronic_plan_plan_features }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.electronic_plan_no_signatures.label_tag }}
+			{{ survey_requirements_form.electronic_plan_no_signatures.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.electronic_plan_no_signatures }}
+			{{ survey_requirements_form.electronic_plan_no_signatures }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.electronic_plan_plan_complies.label_tag }}
+			{{ survey_requirements_form.electronic_plan_plan_complies.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.electronic_plan_plan_complies }}
+			{{ survey_requirements_form.electronic_plan_plan_complies }}
 		</td>
 	</tr>
+{% else %}
+	{% if survey_requirements_form.electronic_plan_plan_image.value in "UY"   %}
+	<tr {% if survey_answers_form.electronic_plan_plan_image_completed.errors %} class="danger" 
+{% elif survey_requirements_form.electronic_plan_plan_image.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.electronic_plan_plan_image_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.electronic_plan_plan_image_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.electronic_plan_plan_features.value in "UY"   %}
+	<tr {% if survey_answers_form.electronic_plan_plan_features_completed.errors %} class="danger" 
+{% elif survey_requirements_form.electronic_plan_plan_features.value in "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.electronic_plan_plan_features_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.electronic_plan_plan_features_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.electronic_plan_no_signatures.value in "UY"   %}
+	<tr {% if survey_answers_form.electronic_plan_no_signatures_completed.errors %} class="danger" 
+{% elif survey_requirements_form.electronic_plan_no_signatures.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.electronic_plan_no_signatures_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.electronic_plan_no_signatures_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.electronic_plan_plan_complies.value in "UY"   %}
+	<tr {% if survey_answers_form.electronic_plan_plan_complies_completed.errors %} class="danger" 
+{% elif survey_requirements_form.electronic_plan_plan_complies.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.electronic_plan_plan_complies_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.electronic_plan_plan_complies_completed }}
+		</td>
+	</tr>
+	{% endif %}
+{% endif %}

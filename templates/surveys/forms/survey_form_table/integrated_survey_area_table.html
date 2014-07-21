@@ -1,32 +1,79 @@
+{% if survey_requirements_form and not survey_answers_form %}
 	<tr>
 		<td>
-			{{ create_survey_form.integrated_survey_area_grid_bearing.label_tag }}
+			{{ survey_requirements_form.integrated_survey_area_grid_bearing.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.integrated_survey_area_grid_bearing }}
+			{{ survey_requirements_form.integrated_survey_area_grid_bearing }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.integrated_survey_area_control_monuments_tied.label_tag }}
+			{{ survey_requirements_form.integrated_survey_area_control_monuments_tied.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.integrated_survey_area_control_monuments_tied }}
+			{{ survey_requirements_form.integrated_survey_area_control_monuments_tied }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.integrated_survey_area_meets_accuracy.label_tag }}
+			{{ survey_requirements_form.integrated_survey_area_meets_accuracy.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.integrated_survey_area_meets_accuracy }}
+			{{ survey_requirements_form.integrated_survey_area_meets_accuracy }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.integrated_survey_area_control_monuments_shown.label_tag }}
+			{{ survey_requirements_form.integrated_survey_area_control_monuments_shown.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.integrated_survey_area_control_monuments_shown }}
+			{{ survey_requirements_form.integrated_survey_area_control_monuments_shown }}
 		</td>
 	</tr>
+{% else %}
+	{% if survey_requirements_form.integrated_survey_area_grid_bearing.value in "UY"   %}
+	<tr {% if survey_answers_form.integrated_survey_area_grid_bearing_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_grid_bearing.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_grid_bearing_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_grid_bearing_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.integrated_survey_area_control_monuments_tied.value in "UY"   %}
+	<tr {% if survey_answers_form.integrated_survey_area_control_monuments_tied_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_control_monuments_tied.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_control_monuments_tied_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_control_monuments_tied_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.integrated_survey_area_meets_accuracy.value in "UY"   %}
+	<tr {% if survey_answers_form.integrated_survey_area_meets_accuracy_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_meets_accuracy.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_meets_accuracy_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_meets_accuracy_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.integrated_survey_area_control_monuments_shown.value in "UY"   %}
+	<tr {% if survey_answers_form.integrated_survey_area_control_monuments_shown_completed.errors %} class="danger" 
+{% elif survey_requirements_form.integrated_survey_area_control_monuments_shown.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_control_monuments_shown_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.integrated_survey_area_control_monuments_shown_completed }}
+		</td>
+	</tr>
+	{% endif %}
+{% endif %}

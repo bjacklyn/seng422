@@ -1,32 +1,79 @@
+{% if survey_requirements_form and not survey_answers_form %}
 	<tr>
 		<td>
-			{{ create_survey_form.miscellaneous_spelling_check.label_tag }}
+			{{ survey_requirements_form.miscellaneous_spelling_check.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.miscellaneous_spelling_check }}
+			{{ survey_requirements_form.miscellaneous_spelling_check }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.miscellaneous_standard_plan_size.label_tag }}
+			{{ survey_requirements_form.miscellaneous_standard_plan_size.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.miscellaneous_standard_plan_size }}
+			{{ survey_requirements_form.miscellaneous_standard_plan_size }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.miscellaneous_oriented_north.label_tag }}
+			{{ survey_requirements_form.miscellaneous_oriented_north.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.miscellaneous_oriented_north }}
+			{{ survey_requirements_form.miscellaneous_oriented_north }}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{{ create_survey_form.miscellaneous_notation.label_tag }}
+			{{ survey_requirements_form.miscellaneous_notation.label_tag }}
 		</td>
 		<td>
-			{{ create_survey_form.miscellaneous_notation }}
+			{{ survey_requirements_form.miscellaneous_notation }}
 		</td>
 	</tr>
+{% else %}
+	{% if survey_requirements_form.miscellaneous_spelling_check.value in "UY"   %}
+	<tr {% if survey_answers_form.miscellaneous_spelling_check_completed.errors %} class="danger" 
+{% elif survey_requirements_form.miscellaneous_spelling_check.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.miscellaneous_spelling_check_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.miscellaneous_spelling_check_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.miscellaneous_standard_plan_size.value in "UY"   %}
+	<tr {% if survey_answers_form.miscellaneous_standard_plan_size_completed.errors %} class="danger" 
+{% elif survey_requirements_form.miscellaneous_standard_plan_size.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.miscellaneous_standard_plan_size_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.miscellaneous_standard_plan_size_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.miscellaneous_oriented_north.value in "UY"   %}
+	<tr {% if survey_answers_form.miscellaneous_oriented_north_completed.errors %} class="danger" 
+{% elif survey_requirements_form.miscellaneous_oriented_north.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.miscellaneous_oriented_north_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.miscellaneous_oriented_north_completed }}
+		</td>
+	</tr>
+	{% endif %}
+	{% if survey_requirements_form.miscellaneous_notation.value in "UY"   %}
+	<tr {% if survey_answers_form.miscellaneous_notation_completed.errors %} class="danger" 
+{% elif survey_requirements_form.miscellaneous_notation.value == "Y" %} class="warning" {% endif %}>
+		<td>
+			{{ survey_answers_form.miscellaneous_notation_completed.label_tag }}
+		</td>
+		<td>
+			{{ survey_answers_form.miscellaneous_notation_completed }}
+		</td>
+	</tr>
+	{% endif %}
+{% endif %}
