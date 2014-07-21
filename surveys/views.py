@@ -109,7 +109,7 @@ def display_survey(request, survey_id):
 		'survey_id': survey_id,
 		'survey_completed': True if survey.status == 'C' else False,
 		'cancel_button_text': 'Back',
-		'show_edit_button': True if group == 'Manager' else False,
+		'show_edit_button': True if group == 'Manager' and survey.status != Survey.SURVEY_COMPLETE else False,
 		'edit_button_text': 'Edit Survey',
 		'show_map_and_weather_button': True
 	})
