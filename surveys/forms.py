@@ -62,11 +62,9 @@ class SurveyAnswersForm(SurveyForm):
 		if self.survey_requirements is not None:
 			for field, value in cleaned_data.iteritems():
 				corresponding_field = field[:-len('_completed')]
-				print corresponding_field + " " + field
 				required = True if self.survey_requirements[corresponding_field] == 'Y' else False
 				if required and value != 'Y':
 					self._errors[field] = 'This field must be part of your survey report.'
-					print field + " has errors"
 
 		return cleaned_data
 		
