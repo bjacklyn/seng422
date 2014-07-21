@@ -82,15 +82,21 @@ def display_survey(request, survey_id):
 	if survey is None:
 		return HttpResponseForbidden('You do not have access to this survey')
 
-	survey_requirements_form = SurveyRequirementsForm(instance=survey.requirements)
+	disabled = False if group == 'Surveyor' and survey.status != Survey.SURVEY_COMPLETE else True
+
 	survey_info_form = SurveyInfoForm(instance=survey.info, disabled=True)
-	survey_answers_form = SurveyAnswersForm(disabled=True if group == 'Manager' else False)
+	survey_requirements_form = SurveyRequirementsForm(instance=survey.requirements)
+	survey_answers_form = SurveyAnswersForm(disabled=disabled)
 
 	if request.method == 'POST':
 		survey_answers_form = SurveyAnswersForm(request.POST, instance=survey.answers, survey_requirements=survey.requirements)
 		if survey_answers_form.is_valid():
-			survey.status = 'C'
+			survey.status = Survey.SURVEY_COMPLETE
+			survey.answers = survey_answers_form.save()
 			survey.save()
+		
+			# re-render survey answers with radio buttons disabled
+			survey_answers_form = SurveyAnswersForm(instance=survey.answers, survey_requirements=survey.requirements, disabled=True)
 
 	template = loader.get_template('surveys/view_survey_page.html')
 

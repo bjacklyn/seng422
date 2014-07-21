@@ -156,9 +156,12 @@ class Survey(models.Model):
     answers = models.ForeignKey(SurveyAnswers, blank=True, null=True)
 
     # Survey Status
+    SURVEY_COMPLETE = 'C'
+    SURVEY_INCOMPLETE = 'I'
+
     SURVEY_STATUS_CHOICES = (
-        ('C', 'Complete'),
-        ('I', 'Incomplete'),
+        (SURVEY_COMPLETE, 'Complete'),
+        (SURVEY_INCOMPLETE, 'Incomplete'),
     )
     status = models.CharField(max_length=1, choices=SURVEY_STATUS_CHOICES, blank=False, default='I')
 
