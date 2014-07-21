@@ -8,5 +8,6 @@ urlpatterns = patterns('',
 	url(r'/delete$', views.delete_surveys, name='delete_surveys'),
 	url(r'/display/(?P<survey_id>\d+)$', views.display_survey, name='display_survey'),
 	url(r'/display/edit/(?P<survey_id>\d+)$', views.edit_survey, name='edit_survey'),
+	url(r'/reopen$', views.reopen_survey, name='reopen_survey'),
 	url(r'/cancel$', views.cancel_create_survey, name='cancel_create_survey')
 )
